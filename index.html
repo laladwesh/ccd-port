@@ -10,42 +10,53 @@
     />
     <link rel="stylesheet" href="./output.css" />
   </head>
-  <body class="bg-primary text-white-100 min-h-screen">
-    <div class="max-w-3xl mx-auto px-6 py-16 sm:py-20">
-      <header class="mb-12 sm:mb-16">
-        <p class="text-secondary text-sm tracking-wide uppercase mb-2">
+  <body class="bg-primary text-white-100 min-h-screen relative overflow-x-hidden">
+    <div
+      class="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 w-[36rem] h-[36rem] rounded-full bg-accent/20 blur-[120px]"
+      aria-hidden="true"
+    ></div>
+
+    <div class="relative max-w-3xl mx-auto px-6 py-16 sm:py-24">
+      <header class="mb-14 sm:mb-16">
+        <div
+          class="inline-flex items-center gap-2 rounded-full border border-white-100/10 bg-white-100/5 px-3 py-1 text-xs tracking-wide uppercase text-secondary mb-5"
+        >
+          <span class="w-1.5 h-1.5 rounded-full bg-accent"></span>
           Center For Career Development, IITG
-        </p>
-        <h1 class="text-2xl sm:text-3xl font-semibold">CCD Projects</h1>
-        <p class="text-secondary mt-3 text-sm sm:text-base leading-relaxed">
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">
+          CCD Projects
+        </h1>
+        <p class="text-secondary mt-3 text-sm sm:text-base leading-relaxed max-w-xl">
           Every route and project the placement cell runs, with a link to its
           source. Maintained by
           <a
             href="https://avinashgupta.in"
-            class="underline decoration-secondary/50 hover:decoration-accent hover:text-accent transition-colors"
+            class="text-white-100 underline decoration-secondary/40 underline-offset-2 hover:decoration-accent hover:text-accent transition-colors"
             >Avinash</a
           >.
         </p>
       </header>
 
       <main>
-        <ul id="project-list" class="divide-y divide-white-100/10">
+        <ul id="project-list" class="flex flex-col">
           <!-- rows injected by app.js -->
         </ul>
-        <p
-          id="empty-state"
-          class="text-secondary text-sm hidden"
-        >
+        <p id="empty-state" class="text-secondary text-sm hidden">
           Nothing listed yet.
         </p>
       </main>
 
-      <footer class="mt-16 pt-8 border-t border-white-100/10">
+      <footer
+        class="mt-16 pt-8 border-t border-white-100/10 flex items-center justify-between text-sm text-secondary"
+      >
         <a
           href="https://avinashgupta.in"
-          class="text-secondary text-sm hover:text-accent transition-colors"
-          >&larr; back to avinashgupta.in</a
+          class="hover:text-accent transition-colors inline-flex items-center gap-1.5"
         >
+          <span aria-hidden="true">&larr;</span> avinashgupta.in
+        </a>
+        <span id="project-count"></span>
       </footer>
     </div>
 

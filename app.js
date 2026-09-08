@@ -19,31 +19,46 @@ async function loadProjects() {
 
   list.innerHTML = projects
     .map(
-      (p) => `
-      <li class="py-5 flex items-start justify-between gap-4">
-        <div class="min-w-0">
-          <h2 class="text-base sm:text-lg font-medium">
-            ${
-              p.url
-                ? `<a href="${escapeAttr(p.url)}" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">${escapeHtml(p.name)}</a>`
-                : escapeHtml(p.name)
-            }
-          </h2>
-          <p class="text-secondary text-sm mt-1">${escapeHtml(p.description)}</p>
-        </div>
-        <a
-          href="${escapeAttr(p.github)}"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="shrink-0 flex items-center gap-1.5 text-secondary hover:text-accent transition-colors text-sm mt-1"
-          aria-label="${escapeAttr(p.name)} on GitHub"
+      (p, i) => `
+      <li class="group border-b border-white-100/10 last:border-b-0">
+        <div
+          class="flex items-start sm:items-center justify-between gap-4 py-5 px-3 -mx-3 rounded-lg transition-colors group-hover:bg-white-100/5"
         >
-          ${GITHUB_ICON}
-          <span class="hidden sm:inline">GitHub</span>
-        </a>
+          <div class="flex items-start sm:items-center gap-4 min-w-0">
+            <span
+              class="hidden sm:block shrink-0 font-mono text-xs text-secondary/60 tabular-nums pt-0.5"
+              >${String(i + 1).padStart(2, "0")}</span
+            >
+            <div class="min-w-0">
+              <h2 class="text-base sm:text-lg font-medium truncate">
+                ${
+                  p.url
+                    ? `<a href="${escapeAttr(p.url)}" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">${escapeHtml(p.name)}</a>`
+                    : escapeHtml(p.name)
+                }
+              </h2>
+              <p class="text-secondary text-sm mt-1 leading-relaxed">${escapeHtml(p.description)}</p>
+            </div>
+          </div>
+          <a
+            href="${escapeAttr(p.github)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="shrink-0 flex items-center gap-1.5 rounded-full border border-white-100/10 px-3 py-1.5 text-secondary hover:text-accent hover:border-accent/50 transition-colors text-xs sm:text-sm"
+            aria-label="${escapeAttr(p.name)} on GitHub"
+          >
+            ${GITHUB_ICON}
+            <span class="hidden sm:inline">GitHub</span>
+          </a>
+        </div>
       </li>`
     )
     .join("");
+
+  const countEl = document.getElementById("project-count");
+  if (countEl) {
+    countEl.textContent = `${projects.length} ${projects.length === 1 ? "project" : "projects"}`;
+  }
 }
 
 function escapeHtml(str) {
