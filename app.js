@@ -22,7 +22,13 @@ async function loadProjects() {
       (p) => `
       <li class="py-5 flex items-start justify-between gap-4">
         <div class="min-w-0">
-          <h2 class="text-base sm:text-lg font-medium">${escapeHtml(p.name)}</h2>
+          <h2 class="text-base sm:text-lg font-medium">
+            ${
+              p.url
+                ? `<a href="${escapeAttr(p.url)}" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors">${escapeHtml(p.name)}</a>`
+                : escapeHtml(p.name)
+            }
+          </h2>
           <p class="text-secondary text-sm mt-1">${escapeHtml(p.description)}</p>
         </div>
         <a

@@ -1,7 +1,44 @@
 [
   {
-    "name": "Example Route — replace me",
-    "description": "One-line description of what this route/project does.",
-    "github": "https://github.com/your-username/your-repo"
+    "name": "Placement Portal",
+    "description": "Core placement process — job postings, applications, and drive scheduling for students and recruiters.",
+    "url": "https://iitg.ac.in/placements",
+    "github": "https://github.com/tnp-iitg/Placement-Portal-IITG"
+  },
+  {
+    "name": "Internship Portal",
+    "description": "Internship-cycle counterpart of the placements portal — postings and applications.",
+    "url": "https://iitg.ac.in/intern",
+    "github": "https://github.com/tnp-iitg/Intern-Portal-IITG"
+  },
+  {
+    "name": "Data Collection Portal",
+    "description": "Collects student data and preferences for the 2026 internship cycle.",
+    "url": "https://iitg.ac.in/intern-2026",
+    "github": "https://github.com/laladwesh/intern-2026"
+  },
+  {
+    "name": "D-Day Portal",
+    "description": "Live coordination and tracking tool used during placement/interview days.",
+    "url": "https://iitg.ac.in/dday",
+    "github": "https://github.com/laladwesh/live-placement-ccd"
+  },
+  {
+    "name": "DPR Portal",
+    "description": "Daily progress report tracking for the placement season.",
+    "url": "https://iitg.ac.in/listing-ccd",
+    "github": "https://github.com/laladwesh/dpr"
+  },
+  {
+    "name": "CCD App Backend",
+    "description": "Codebase behind the CCD's internal placement app.",
+    "url": "https://iitg.ac.in/ccd-app",
+    "github": "https://github.com/tnp-iitg/ccd-app-backend"
+  },
+  {
+    "name": "AIPC Portal",
+    "description": "AIPC portal for the placement process.",
+    "url": "https://iitg.ac.in/aipc",
+    "github": "https://github.com/laladwesh/aipc"
   }
 ]

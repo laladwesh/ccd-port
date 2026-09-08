@@ -13,9 +13,12 @@ client-side routing.
   {
     "name": "Route name",
     "description": "One line describing what it does.",
+    "url": "https://iitg.ac.in/route",
     "github": "https://github.com/user/repo"
   }
   ```
+  `url` is optional — if present, the name links to it; the GitHub icon always
+  links to `github`.
 - `src/input.css` / `output.css` — Tailwind source and compiled output. Only rebuild
   this if you change classes in `index.html`.
 
