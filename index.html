@@ -1,64 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CCD | Center For Career Development, IITG</title>
-    <meta
-      name="description"
-      content="Projects and routes maintained by the Center For Career Development, IIT Guwahati."
-    />
-    <link rel="stylesheet" href="./output.css" />
-  </head>
-  <body class="bg-primary text-white-100 min-h-screen relative overflow-x-hidden">
-    <div
-      class="pointer-events-none fixed -top-40 left-1/2 -translate-x-1/2 w-[36rem] h-[36rem] rounded-full bg-accent/20 blur-[120px]"
-      aria-hidden="true"
-    ></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CCD Projects — Center For Career Development, IIT Guwahati</title>
+  <meta
+    name="description"
+    content="Projects and routes maintained by the Center For Career Development, IIT Guwahati."
+  />
 
-    <div class="relative max-w-3xl mx-auto px-6 py-16 sm:py-24">
-      <header class="mb-14 sm:mb-16">
-        <div
-          class="inline-flex items-center gap-2 rounded-full border border-white-100/10 bg-white-100/5 px-3 py-1 text-xs tracking-wide uppercase text-secondary mb-5"
-        >
-          Center For Career Development, IITG
-        </div>
-        <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight">
-          CCD Projects
-        </h1>
-        <p class="text-secondary mt-3 text-sm sm:text-base leading-relaxed max-w-xl">
-          Every route and project the placement cell runs, with a link to its
-          source. Maintained by
-          <a
-            href="https://avinashgupta.in"
-            class="text-white-100 underline decoration-secondary/40 underline-offset-2 hover:decoration-accent hover:text-accent transition-colors"
-            >Avinash</a
-          >.
-        </p>
-      </header>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
 
-      <main>
-        <ul id="project-list" class="flex flex-col">
-          <!-- rows injected by app.js -->
-        </ul>
-        <p id="empty-state" class="text-secondary text-sm hidden">
-          Nothing listed yet.
-        </p>
-      </main>
+  <main class="container">
+    <header>
+      <div class="meta-lead">Center For Career Development, IIT Guwahati</div>
+      <h1>CCD Projects</h1>
+      <p class="intro">
+        Every route and project the placement cell runs, with a link to its source. Maintained by <a href="https://avinashgupta.in">Avinash</a>.
+      </p>
+    </header>
 
-      <footer
-        class="mt-16 pt-8 border-t border-white-100/10 flex items-center justify-between text-sm text-secondary"
-      >
-        <a
-          href="https://avinashgupta.in"
-          class="hover:text-accent transition-colors inline-flex items-center gap-1.5"
-        >
-          <span aria-hidden="true">&larr;</span> avinashgupta.in
-        </a>
-        <span id="project-count"></span>
-      </footer>
-    </div>
+    <section class="ledger" aria-label="Projects Ledger">
+      <div class="ledger-head" aria-hidden="true">
+        <span>#</span>
+        <span>Project &amp; Function</span>
+        <span>Deployment Route</span>
+        <span>Source Code</span>
+      </div>
 
-    <script src="./app.js"></script>
-  </body>
+      <ol class="entry-list" id="project-list">
+        <!-- entries injected by app.js from projects.json -->
+      </ol>
+      <p class="empty-state" id="empty-state" hidden>Nothing listed yet.</p>
+    </section>
+
+    <footer>
+      <div class="footer-left">INTERNAL REFERENCE // CCD IIT GUWAHATI</div>
+      <div class="footer-right" id="project-count"></div>
+    </footer>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
 </html>
