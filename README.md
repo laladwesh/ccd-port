@@ -1,13 +1,14 @@
 # CCD Projects
 
 A minimal listing page for every route/project the Center For Career Development
-(CCD), IIT Guwahati, maintains. Plain HTML + Tailwind CSS, no framework, no
-client-side routing.
+(CCD), IIT Guwahati, maintains. Plain HTML/CSS/JS, no framework, no build step,
+no client-side routing.
 
 ## Structure
 
-- `index.html` — the page markup.
-- `app.js` — reads `projects.json` and renders the list. No build step needed for this file.
+- `index.html` — the page markup (header, ledger table head, footer).
+- `style.css` — all styling, plain CSS custom properties, no framework.
+- `app.js` — reads `projects.json` and renders the entry list into `index.html`.
 - `projects.json` — **the only file you need to edit day-to-day.** Add one object per route:
   ```json
   {
@@ -17,24 +18,20 @@ client-side routing.
     "github": "https://github.com/user/repo"
   }
   ```
-  `url` is optional — if present, the name links to it; the GitHub icon always
-  links to `github`.
-- `src/input.css` / `output.css` — Tailwind source and compiled output. Only rebuild
-  this if you change classes in `index.html`.
+  `url` is optional — if present, it renders as the "Deployment Route" column;
+  `github` always renders as the "Source Code" column.
 
 ## Local dev
 
 ```
-npm install
-npm run dev     # watches src/input.css -> output.css
 npm run serve   # serves the folder at http://localhost:4173 (needs Python)
 ```
+No install or build step — just edit `projects.json` and refresh.
 
 ## Deploy (Docker on your VPS, over SSH)
 
-The repo has a `Dockerfile` and `docker-compose.yml`. The container builds
-`output.css` from source and serves the static files with nginx's default
-config (no custom nginx config in this repo) on container port 80, mapped to
+The repo has a `Dockerfile` and `docker-compose.yml`. The container is just
+nginx serving the static files as-is on container port 80, mapped to
 **host port 2025**.
 
 Since other projects already run on this server, this is intentionally
