@@ -1,0 +1,7 @@
+services:
+  ccd-port:
+    build: .
+    container_name: ccd-port
+    restart: unless-stopped
+    ports:
+      - "2025:80"

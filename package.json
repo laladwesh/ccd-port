@@ -1,0 +1,14 @@
+{
+  "name": "ccd-port",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tailwindcss -i ./src/input.css -o ./output.css --watch",
+    "build": "tailwindcss -i ./src/input.css -o ./output.css --minify",
+    "serve": "python -m http.server 4173"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}
