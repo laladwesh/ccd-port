@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIMS Projects - Prasad Institute of Medical Sciences</title>
+  <meta
+    name="description"
+    content="Projects and routes built for Prasad Institute of Medical Sciences."
+  />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+
+  <div class="layout-wrapper">
+
+    <header class="context-rail">
+      <h1>PIMS Projects</h1>
+      <p class="subtitle">Prasad Institute of Medical Sciences</p>
+      <p class="intro">
+        Every route and project built for the institute, with a link to its source.
+        Maintained by <a href="https://avinashgupta.in">Avinash</a>.
+      </p>
+    </header>
+
+    <main class="data-rail">
+      <ul class="project-list" id="project-list">
+        <!-- entries injected by app.js from projects.json -->
+      </ul>
+      <p class="empty-state" id="empty-state" hidden>Nothing listed yet.</p>
+    </main>
+
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

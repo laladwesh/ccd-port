@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "serve": "python -m http.server 4173"
+    "serve:ccd": "python -m http.server 4173 --directory ccd",
+    "serve:prasad": "python -m http.server 4174 --directory prasad"
   }
 }

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "PIMS Evalu Pro (Copy Checker)",
+    "description": "Full-stack digital examination evaluation platform.",
+    "url": "https://prasadacademic.in",
+    "github": "https://github.com/laladwesh/copy-checker"
+  },
+  {
+    "name": "EaseExit",
+    "description": "Backend for the college leave management app — digitizes and automates leave applications and approvals.",
+    "url": "https://easeexit.prasadacademic.in",
+    "github": "https://github.com/laladwesh/college-leave-backend"
+  },
+  {
+    "name": "Elective Registration",
+    "description": "Elective course registration portal for students.",
+    "url": "https://elective.prasadacademic.in",
+    "github": "https://github.com/laladwesh/elective-portal"
+  },
+  {
+    "name": "Status Dashboard",
+    "description": "Public service status page and protected infrastructure monitoring dashboard.",
+    "url": "https://status.prasadacademic.in",
+    "github": "https://github.com/laladwesh/status"
+  }
+]

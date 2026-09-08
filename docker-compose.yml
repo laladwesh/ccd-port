@@ -1,7 +1,14 @@
 services:
   ccd-port:
-    build: .
+    build: ./ccd
     container_name: ccd-port
     restart: unless-stopped
     ports:
       - "2025:80"
+
+  prasad-port:
+    build: ./prasad
+    container_name: prasad-port
+    restart: unless-stopped
+    ports:
+      - "2026:80"

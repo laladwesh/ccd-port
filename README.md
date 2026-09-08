@@ -1,93 +1,111 @@
-# CCD Projects
+# Project Listing Sites
 
-A minimal listing page for every route/project the Center For Career Development
-(CCD), IIT Guwahati, maintains. Plain HTML/CSS/JS, no framework, no build step,
-no client-side routing.
+One repo, two independent static listing sites, each mapped to its own
+subdomain of `avinashgupta.in`. Plain HTML/CSS/JS, no framework, no build
+step, no client-side routing.
 
-## Structure
+- `ccd/` — **CCD Projects**, for the Center For Career Development, IIT
+  Guwahati. Deployed at `ccd.avinashgupta.in`.
+- `prasad/` — **PIMS Projects**, for Prasad Institute of Medical Sciences.
+  Deployed at `prasad.avinashgupta.in`.
 
-- `index.html` — the page markup (header, ledger table head, footer).
+Each subfolder is a self-contained site with the identical structure:
+
+- `index.html` — the page markup: a sticky left-rail intro (`.context-rail`)
+  next to a scrolling right-rail project list (`.data-rail`).
 - `style.css` — all styling, plain CSS custom properties, no framework.
-- `app.js` — reads `projects.json` and renders the entry list into `index.html`.
-- `projects.json` — **the only file you need to edit day-to-day.** Add one object per route:
+- `app.js` — reads `projects.json` and renders `.project-item` entries into
+  the list.
+- `projects.json` — **the only file you need to edit day-to-day.** Add one
+  object per route:
   ```json
   {
     "name": "Route name",
     "description": "One line describing what it does.",
-    "url": "https://iitg.ac.in/route",
+    "url": "https://example.com/route",
     "github": "https://github.com/user/repo"
   }
   ```
-  `url` is optional — if present, it renders as the "Deployment Route" column;
-  `github` always renders as the "Source Code" column.
+  `url` is optional — if present, it renders as the "Route" link; `github`
+  is also optional — if present, it renders as the "Source" link.
+- `Dockerfile` — nginx serving the folder's static files as-is.
 
 ## Local dev
 
 ```
-npm run serve   # serves the folder at http://localhost:4173 (needs Python)
+npm run serve:ccd      # http://localhost:4173 (needs Python)
+npm run serve:prasad   # http://localhost:4174
 ```
-No install or build step — just edit `projects.json` and refresh.
+No install or build step — just edit the relevant `projects.json` and refresh.
 
 ## Deploy (Docker on your VPS, over SSH)
 
-The repo has a `Dockerfile` and `docker-compose.yml`. The container is just
-nginx serving the static files as-is on container port 80, mapped to
-**host port 2025**.
+`docker-compose.yml` at the repo root defines both sites as separate
+services, each built from its own subfolder:
+
+| Service        | Build context | Host port |
+|-----------------|---------------|-----------|
+| `ccd-port`      | `./ccd`       | 2025      |
+| `prasad-port`   | `./prasad`    | 2026      |
 
 Since other projects already run on this server, this is intentionally
 isolated: `docker compose` scopes its own network/containers per project
-directory, so bringing this one up does **not** touch any other container,
+directory, so bringing these up does **not** touch any other container,
 compose stack, or network already on the box — the only shared resource is
-the host port. Before first deploy, confirm port 2025 and the container name
-are actually free:
+the host ports. Before first deploy (or after adding `prasad-port`), confirm
+the ports and container names are free:
 ```
 docker ps -a --format '{{.Names}}\t{{.Ports}}'   # check for name/port clashes
-sudo ss -tlnp | grep 2025                        # confirm nothing else is bound to 2025
+sudo ss -tlnp | grep -E '2025|2026'               # confirm nothing else is bound to these
 ```
-If 2025 turns out to be taken, change the left side of the `ports:` mapping
-in `docker-compose.yml` (e.g. `"2050:80"`) — nothing else in the repo needs
-to change to move host ports.
+If a port's taken, change the left side of that service's `ports:` mapping
+in `docker-compose.yml` — nothing else needs to change to move host ports.
 
-1. Get the code onto the server (either `git clone` the repo there, or `scp`
-   the folder over):
+1. Get the code onto the server (`git pull` if it's already cloned there, or
+   clone fresh):
    ```
-   scp -r ./ccd-port user@your-server:/opt/ccd-port
+   git clone https://github.com/laladwesh/ccd-port.git
    ```
-2. SSH in and bring it up:
+2. SSH in and bring both sites up:
    ```
    ssh user@your-server
-   cd /opt/ccd-port
+   cd ccd-port
    docker compose up -d --build
    ```
-3. Verify it's up: `curl localhost:2025` on the server should return the page
-   HTML.
-4. Whenever you edit `projects.json` or anything else: `git pull` (or `scp`
-   again), then `docker compose up -d --build` to rebuild and restart.
-
-That's the whole deploy step — the site is now live at `localhost:2025` on
-the server. Forwarding `ccd.avinashgupta.in` to it (reverse proxy + DNS) is
-the part you said you'll wire up yourself; ping me if you want a hand with
-that nginx/Caddy reverse-proxy block once you're ready.
+3. Verify: `curl localhost:2025` and `curl localhost:2026` on the server
+   should each return their page's HTML.
+4. Whenever you edit either `projects.json` (or anything else): `git pull`,
+   then `docker compose up -d --build` to rebuild and restart both services
+   (add a service name, e.g. `docker compose up -d --build prasad-port`, to
+   only rebuild one).
 
 ### Useful commands
 ```
-docker compose logs -f       # tail container logs
-docker compose down          # stop and remove the container
-docker compose up -d --build # rebuild after changes and restart
+docker compose logs -f                # tail logs for both services
+docker compose logs -f prasad-port    # tail logs for just one
+docker compose down                   # stop and remove both containers
+docker compose up -d --build          # rebuild after changes and restart
 ```
 
-## DNS
+## DNS + reverse proxy
 
-Since `avinashgupta.in` currently resolves to a plain A record
-(`129.159.16.182` — looks like your own VPS, not Vercel/Netlify/GitHub
-Pages), once you're ready to point the subdomain at this container, the
-typical path is: add an **A record** `ccd` → `129.159.16.182` at your
-registrar, then reverse-proxy `ccd.avinashgupta.in` → `localhost:2025` on
-that same box. Say the word when you want that config written out.
+`avinashgupta.in` resolves to a plain A record (`129.159.16.182` — your own
+VPS), with a system nginx in front handling TLS per-subdomain via certbot.
+
+- **`ccd.avinashgupta.in`** — already live. DNS A record and nginx config
+  (`/etc/nginx/sites-available/ccd-app`) already existed on the server from a
+  prior deploy; we just repointed its `proxy_pass` to `localhost:2025`.
+- **`prasad.avinashgupta.in`** — not set up yet. You'll need:
+  1. An **A record**: `prasad` → `129.159.16.182` at your registrar.
+  2. A new nginx server block proxying `prasad.avinashgupta.in` →
+     `localhost:2026`, then `sudo certbot --nginx -d prasad.avinashgupta.in`
+     for TLS — same pattern as the `ccd-app` config. Ask when you're ready
+     and I'll write out the exact block/commands.
 
 ## Portfolio nav link
 
-`avinashgupta.in`'s navbar now has a **CCD** entry (see
+`avinashgupta.in`'s navbar has a **CCD** entry (see
 `portfolio/src/constants/index.js` and `Navbar.jsx`) that opens
-`https://ccd.avinashgupta.in` in a new tab — a plain link, not a redirect, per
-your call. No changes needed on the portfolio's hosting/DNS side for this part.
+`https://ccd.avinashgupta.in` in a new tab — a plain link, not a redirect. No
+nav link exists yet for `prasad.avinashgupta.in`; say if you want one added
+the same way.

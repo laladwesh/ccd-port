@@ -1,0 +1,210 @@
+/*
+  Organic/Utilitarian Reset & Variables
+  Sticking strictly to the provided brand palette.
+*/
+:root {
+  --bg: #050816;
+  --panel: #151030;
+  --near-black: #100d25;
+  --text-main: #f3f3f3;
+  --text-muted: #aaa6c3;
+  --accent: #804dee;
+  --border-color: #2a2356;
+
+  --font-sans: 'Poppins', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 4vw;
+  min-height: 100vh;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+/*
+  Asymmetrical Layout: Left context, right data.
+  Breaks the centered, symmetrical "AI" feel immediately.
+*/
+.layout-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 5rem;
+}
+
+/* --- Left Rail: Context --- */
+.context-rail {
+  flex: 1 1 300px;
+  position: sticky;
+  top: 4vw;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-weight: 500;
+}
+
+.intro {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* Standard, unambiguous text links */
+a {
+  color: var(--text-main);
+  text-decoration: underline;
+  text-decoration-color: var(--text-muted);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: all 0.15s ease-out;
+}
+
+a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
+a:focus-visible {
+  outline: 2px dashed var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* --- Right Rail: The Index --- */
+.data-rail {
+  flex: 2 1 600px;
+  min-width: 0; /* prevents flex blowout */
+}
+
+.project-list {
+  list-style: none;
+  border-top: 1px solid var(--border-color);
+}
+
+.project-item {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Typography driving hierarchy, not boxes/colors */
+.project-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.project-num {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.project-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+.project-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 65ch; /* Optimal reading measure */
+}
+
+.project-links {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.link-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.link-label {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: 60px; /* Aligns the links nicely */
+}
+
+.link-url {
+  font-family: var(--font-mono);
+  word-break: break-all;
+}
+
+.empty-state {
+  color: var(--text-muted);
+  padding: 2.5rem 0;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 900px) {
+  .layout-wrapper {
+    gap: 3rem;
+  }
+  .context-rail {
+    position: static;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2rem;
+  }
+  .project-list {
+    border-top: none;
+  }
+  .project-item {
+    padding: 2rem 0;
+  }
+}
+
+@media (max-width: 500px) {
+  body {
+    padding: 1.5rem;
+  }
+  .link-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  .link-label {
+    margin-bottom: 0.1rem;
+  }
+}
