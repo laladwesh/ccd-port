@@ -34,6 +34,20 @@ The repo has a `Dockerfile` and `docker-compose.yml`. The container builds
 config (no custom nginx config in this repo) on container port 80, mapped to
 **host port 2025**.
 
+Since other projects already run on this server, this is intentionally
+isolated: `docker compose` scopes its own network/containers per project
+directory, so bringing this one up does **not** touch any other container,
+compose stack, or network already on the box — the only shared resource is
+the host port. Before first deploy, confirm port 2025 and the container name
+are actually free:
+```
+docker ps -a --format '{{.Names}}\t{{.Ports}}'   # check for name/port clashes
+sudo ss -tlnp | grep 2025                        # confirm nothing else is bound to 2025
+```
+If 2025 turns out to be taken, change the left side of the `ports:` mapping
+in `docker-compose.yml` (e.g. `"2050:80"`) — nothing else in the repo needs
+to change to move host ports.
+
 1. Get the code onto the server (either `git clone` the repo there, or `scp`
    the folder over):
    ```
