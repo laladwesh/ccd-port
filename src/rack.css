@@ -1,0 +1,320 @@
+/* The server rack: a tall dark device. Units are buttons; a drawer is a paper card. */
+.stage {
+  display: grid;
+  gap: 24px;
+}
+
+.stage-main {
+  min-width: 0;
+}
+
+@media (min-width: 1000px) {
+  .stage {
+    grid-template-columns: minmax(0, 780px) 280px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .stage-main {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .legend {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 80px;
+  }
+}
+
+.rack {
+  background: var(--dev-bg);
+  border: 1px solid var(--dev-border);
+  border-radius: 4px;
+  box-shadow: 0 20px 40px -12px rgba(26, 26, 26, 0.35), 0 2px 4px rgba(26, 26, 26, 0.15);
+  color: var(--dev-text);
+}
+
+.rack-plate {
+  margin: 12px;
+  padding: 8px 12px;
+  font-size: 13px;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  color: var(--dev-text);
+  background: var(--dev-surface);
+  border: 1px solid var(--dev-border);
+}
+
+.rack-units {
+  display: block;
+}
+
+.rack-base {
+  height: 12px;
+  border-top: 1px solid var(--dev-border);
+  background: var(--dev-surface);
+}
+
+.unit-slot {
+  display: block;
+}
+
+/* One unit: left rail, front panel, right rail. */
+.unit {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 28px;
+  grid-template-rows: 100%;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+  color: var(--dev-text);
+  background: var(--dev-bg);
+}
+
+.unit-rail {
+  display: block;
+}
+
+.unit-face {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  padding: 0 14px;
+  background: var(--dev-surface);
+  border-top: 1px solid var(--dev-border);
+  border-bottom: 1px solid var(--dev-border);
+}
+
+.unit:hover .unit-face {
+  background: #1C1C1C;
+}
+
+.unit:focus-visible {
+  outline: 2px solid var(--dev-text);
+  outline-offset: -2px;
+}
+
+.unit[aria-expanded="true"] .unit-name {
+  color: var(--dev-accent);
+}
+
+.unit-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.unit-name {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.unit-model {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--dev-muted);
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.unit-vents {
+  flex: 0 0 auto;
+  display: none;
+}
+
+@media (min-width: 620px) {
+  .unit-vents {
+    display: block;
+  }
+
+  .unit-name {
+    font-size: 16px;
+  }
+
+  .unit-model {
+    font-size: 13px;
+    -webkit-line-clamp: 1;
+  }
+}
+
+/* LEDs: steady. Colour is also spelled out in the legend, the drawer and for screen readers. */
+.led {
+  flex: 0 0 auto;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+.led--mint {
+  background: var(--led-mint);
+}
+
+.led--amber {
+  background: var(--led-amber);
+}
+
+/* Drawer: a paper card slid out of the unit. */
+.drawer {
+  margin: 10px 14px 14px;
+  padding: 20px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--text);
+}
+
+.drawer-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.drawer-close {
+  flex: 0 0 auto;
+  min-height: 44px;
+}
+
+.drawer-desc {
+  max-width: 64ch;
+  margin-top: 12px;
+}
+
+.drawer-fields {
+  display: grid;
+  gap: 8px;
+  margin-top: 16px;
+  font-size: 15px;
+}
+
+.drawer-field {
+  display: grid;
+  grid-template-columns: 7ch minmax(0, 1fr);
+  gap: 12px;
+}
+
+.drawer-field dt {
+  color: var(--muted);
+}
+
+.drawer-field dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.drawer-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.drawer-stack li {
+  padding: 0 8px;
+  font-size: 14px;
+  border: 1px solid var(--border);
+}
+
+.drawer-owner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.drawer-owner .led {
+  border-color: var(--text);
+}
+
+.drawer-highlights {
+  margin-top: 16px;
+  font-size: 15px;
+}
+
+.drawer-highlights li {
+  position: relative;
+  padding-left: 2ch;
+}
+
+.drawer-highlights li + li {
+  margin-top: 4px;
+}
+
+.drawer-highlights li::before {
+  content: "-";
+  position: absolute;
+  left: 0;
+  color: var(--muted);
+}
+
+.drawer-shot {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  border: 1px solid var(--border);
+}
+
+.drawer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.drawer-links a {
+  min-height: 44px;
+}
+
+@media (max-width: 619px) {
+  .drawer {
+    margin: 8px 8px 12px;
+    padding: 16px;
+  }
+
+  .drawer-field {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* Printed legend, on the paper beside the rack */
+.legend {
+  padding: 12px 14px;
+  font-size: 14px;
+  border: 1px solid var(--border);
+}
+
+.legend-title {
+  margin-bottom: 8px;
+  color: var(--muted);
+}
+
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.legend li + li {
+  margin-top: 4px;
+}
+
+.led--print {
+  border-color: var(--text);
+}
+
+.legend-note {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+}

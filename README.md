@@ -1,111 +1,127 @@
-# Project Listing Sites
+# The Server Rack
 
-One repo, two independent static listing sites, each mapped to its own
-subdomain of `avinashgupta.in`. Plain HTML/CSS/JS, no framework, no build
-step, no client-side routing.
+One Vite + React app that serves two showcase hubs, each drawn as a physical server rack:
 
-- `ccd/` — **CCD Projects**, for the Center For Career Development, IIT
-  Guwahati. Deployed at `ccd.avinashgupta.in`.
-- `prasad/` — **PIMS Projects**, for Prasad Institute of Medical Sciences.
-  Deployed at `prasad.avinashgupta.in`.
+- **RACK-01**, CCD (Centre for Career Development, IIT Guwahati): `ccd.avinashgupta.in`
+- **RACK-02**, Prasad Academic: `prasad.avinashgupta.in`
 
-Each subfolder is a self-contained site with the identical structure:
+The hostname picks the hub (`ccd.*` or `prasad.*`). Anywhere else (local dev, previews) use `?hub=ccd` or `?hub=prasad`.
+Each portal is a unit in the rack; click it (or run `ssh <unit>` in the console) to slide out a drawer with its details.
 
-- `index.html` — the page markup: a sticky left-rail intro (`.context-rail`)
-  next to a scrolling right-rail project list (`.data-rail`).
-- `style.css` — all styling, plain CSS custom properties, no framework.
-- `app.js` — reads `projects.json` and renders `.project-item` entries into
-  the list.
-- `projects.json` — **the only file you need to edit day-to-day.** Add one
-  object per route:
-  ```json
-  {
-    "name": "Route name",
-    "description": "One line describing what it does.",
-    "url": "https://example.com/route",
-    "github": "https://github.com/user/repo"
-  }
-  ```
-  `url` is optional — if present, it renders as the "Route" link; `github`
-  is also optional — if present, it renders as the "Source" link.
-- `Dockerfile` — nginx serving the folder's static files as-is.
+The look is copied from the portfolio (`avinashgupta.in`): paper and ink page, dark devices, Clash Display + JetBrains Mono
+(self-hosted in `public/fonts`), the ink-block section heading, the terminal, and the daemon pointer.
+
+## Editing content
+
+The only files you edit day to day are the two data files. One object per portal:
+
+| File | Hub |
+|---|---|
+| `src/data/ccd.json` | RACK-01 |
+| `src/data/prasad.json` | RACK-02 |
+
+```json
+{
+  "name": "Internship Portal",
+  "description": "One line describing what it does.",
+  "url": "https://example.com/route",
+  "github": "https://github.com/owner/repo",
+  "role": "optional, a string",
+  "stack": ["optional", "array"],
+  "highlights": ["optional", "array"],
+  "appStore": "optional link",
+  "playStore": "optional link",
+  "screenshot": "optional image path or URL"
+}
+```
+
+Optional fields are hidden in the drawer while empty. Nothing is invented: if a field is missing, it is not shown.
+
+What the rack derives from the data:
+
+- **LED**: amber if the GitHub owner is `laladwesh` (built by me), mint for any other owner (institute or org repo). LEDs are steady.
+- **Unit size**: 2U if the entry has a `stack`, otherwise 1U.
+- **Model label**: `SLUG / TOP-3-STACK` when there is a stack, otherwise `SLUG / URL-HOST`.
 
 ## Local dev
 
 ```
-npm run serve:ccd      # http://localhost:4173 (needs Python)
-npm run serve:prasad   # http://localhost:4174
+npm install
+npm run dev          # http://localhost:5173/?hub=ccd   or   ?hub=prasad
+npm run build        # outputs dist/
+npm run preview
 ```
-No install or build step — just edit the relevant `projects.json` and refresh.
 
-## Deploy (Docker on your VPS, over SSH)
+## Docker
 
-`docker-compose.yml` at the repo root defines both sites as separate
-services, each built from its own subfolder:
+`Dockerfile` is multi-stage: `node:20-alpine` builds the app, `nginx:1.27-alpine` serves `dist/` with `nginx.conf`
+(unknown paths fall back to `index.html`). Both hubs use the same image:
 
-| Service        | Build context | Host port |
-|-----------------|---------------|-----------|
-| `ccd-port`      | `./ccd`       | 2025      |
-| `prasad-port`   | `./prasad`    | 2026      |
+| Service | Container | Host port | Hostname |
+|---|---|---|---|
+| `ccd-port` | `ccd-port` | 2025 | `ccd.avinashgupta.in` |
+| `prasad-port` | `prasad-port` | 2026 | `prasad.avinashgupta.in` |
 
-Since other projects already run on this server, this is intentionally
-isolated: `docker compose` scopes its own network/containers per project
-directory, so bringing these up does **not** touch any other container,
-compose stack, or network already on the box — the only shared resource is
-the host ports. Before first deploy (or after adding `prasad-port`), confirm
-the ports and container names are free:
 ```
-docker ps -a --format '{{.Names}}\t{{.Ports}}'   # check for name/port clashes
-sudo ss -tlnp | grep -E '2025|2026'               # confirm nothing else is bound to these
+docker compose up -d --build
+curl localhost:2025    # RACK-01 page
+curl localhost:2026    # RACK-02 page
 ```
-If a port's taken, change the left side of that service's `ports:` mapping
-in `docker-compose.yml` — nothing else needs to change to move host ports.
 
-1. Get the code onto the server (`git pull` if it's already cloned there, or
-   clone fresh):
-   ```
-   git clone https://github.com/laladwesh/ccd-port.git
-   ```
-2. SSH in and bring both sites up:
+The app picks the hub from the hostname, so the reverse proxy must pass the **original Host header**
+(`proxy_set_header Host $host;`), as in the blocks below.
+
+## Deploy on the VPS
+
+These are steps for you to run; nothing here has been run on the server.
+
+1. SSH in, pull, and rebuild:
    ```
    ssh user@your-server
-   cd ccd-port
+   cd ccd-port && git pull
    docker compose up -d --build
    ```
-3. Verify: `curl localhost:2025` and `curl localhost:2026` on the server
-   should each return their page's HTML.
-4. Whenever you edit either `projects.json` (or anything else): `git pull`,
-   then `docker compose up -d --build` to rebuild and restart both services
-   (add a service name, e.g. `docker compose up -d --build prasad-port`, to
-   only rebuild one).
+   Before the first run, check the ports and names are free:
+   ```
+   docker ps -a --format '{{.Names}}\t{{.Ports}}'
+   sudo ss -tlnp | grep -E '2025|2026'
+   ```
+2. **`ccd.avinashgupta.in`** already has DNS and an nginx site (`/etc/nginx/sites-available/ccd-app`) pointing at
+   `localhost:2025`. Make sure it keeps `proxy_set_header Host $host;`.
 
-### Useful commands
-```
-docker compose logs -f                # tail logs for both services
-docker compose logs -f prasad-port    # tail logs for just one
-docker compose down                   # stop and remove both containers
-docker compose up -d --build          # rebuild after changes and restart
-```
+### Bringing `prasad.avinashgupta.in` live
 
-## DNS + reverse proxy
+1. **DNS.** At your registrar, add an A record: `prasad` -> `129.159.16.182`. Check it with
+   `dig +short prasad.avinashgupta.in`.
+2. **nginx site.** Create `/etc/nginx/sites-available/prasad-app`:
+   ```nginx
+   server {
+     listen 80;
+     server_name prasad.avinashgupta.in;
 
-`avinashgupta.in` resolves to a plain A record (`129.159.16.182` — your own
-VPS), with a system nginx in front handling TLS per-subdomain via certbot.
+     location / {
+       proxy_pass http://localhost:2026;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       proxy_set_header X-Forwarded-Proto $scheme;
+     }
+   }
+   ```
+3. **Enable it and reload:**
+   ```
+   sudo ln -s /etc/nginx/sites-available/prasad-app /etc/nginx/sites-enabled/prasad-app
+   sudo nginx -t && sudo systemctl reload nginx
+   ```
+4. **TLS with certbot** (after the DNS record resolves):
+   ```
+   sudo certbot --nginx -d prasad.avinashgupta.in
+   ```
+   Certbot adds the `listen 443 ssl` block and the HTTP -> HTTPS redirect. Check renewal with
+   `sudo certbot renew --dry-run`.
+5. Open `https://prasad.avinashgupta.in`. It should show RACK-02.
 
-- **`ccd.avinashgupta.in`** — already live. DNS A record and nginx config
-  (`/etc/nginx/sites-available/ccd-app`) already existed on the server from a
-  prior deploy; we just repointed its `proxy_pass` to `localhost:2025`.
-- **`prasad.avinashgupta.in`** — not set up yet. You'll need:
-  1. An **A record**: `prasad` → `129.159.16.182` at your registrar.
-  2. A new nginx server block proxying `prasad.avinashgupta.in` →
-     `localhost:2026`, then `sudo certbot --nginx -d prasad.avinashgupta.in`
-     for TLS — same pattern as the `ccd-app` config. Ask when you're ready
-     and I'll write out the exact block/commands.
+## Portfolio link
 
-## Portfolio nav link
-
-`avinashgupta.in`'s navbar has a **CCD** entry (see
-`portfolio/src/constants/index.js` and `Navbar.jsx`) that opens
-`https://ccd.avinashgupta.in` in a new tab — a plain link, not a redirect. No
-nav link exists yet for `prasad.avinashgupta.in`; say if you want one added
-the same way.
+The portfolio navbar has a CCD entry that opens `https://ccd.avinashgupta.in`. There is no nav link to
+`prasad.avinashgupta.in` yet.

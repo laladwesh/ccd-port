@@ -1,13 +1,16 @@
+# Both hubs are the same image. The hostname (ccd. / prasad.) chooses which rack to show.
 services:
   ccd-port:
-    build: ./ccd
+    build: .
+    image: ccd-port:latest
     container_name: ccd-port
     restart: unless-stopped
     ports:
       - "2025:80"
 
   prasad-port:
-    build: ./prasad
+    build: .
+    image: ccd-port:latest
     container_name: prasad-port
     restart: unless-stopped
     ports:

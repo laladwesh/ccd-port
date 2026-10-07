@@ -1,0 +1,92 @@
+[
+  {
+    "name": "Placement Portal",
+    "description": "Core placement process — job postings, applications, and drive scheduling for students and recruiters.",
+    "url": "https://iitg.ac.in/placements",
+    "github": "https://github.com/tnp-iitg/Placement-Portal-IITG",
+    "stack": [
+      "React",
+      "Ant Design",
+      "Redux Toolkit",
+      "Node.js",
+      "Express.js",
+      "MongoDB"
+    ],
+    "role": "Software Developer Intern, CCD (May 2026 – Jul 2026)",
+    "highlights": [
+      "Architected and deployed as one of two centralised platforms, with Intern Portal.",
+      "Secures 6 role-based access levels with JWT and Google/Microsoft OAuth2 SSO.",
+      "HMAC-SHA256-signed cross-portal data-sync integration."
+    ]
+  },
+  {
+    "name": "Internship Portal",
+    "description": "Internship-cycle counterpart of the placements portal — postings and applications.",
+    "url": "https://iitg.ac.in/intern",
+    "github": "https://github.com/tnp-iitg/Intern-Portal-IITG",
+    "stack": [
+      "React",
+      "Redux Toolkit",
+      "Node.js",
+      "MongoDB",
+      "Express.js",
+      "Tailwind CSS",
+      "Docker",
+      "Nginx",
+      "GitHub Actions",
+      "Sentry"
+    ],
+    "role": "Software Developer Intern, CCD (May 2026 – Jul 2026)",
+    "highlights": [
+      "Secures 6 role-based access levels with JWT and Google/Microsoft OAuth2 SSO.",
+      "Multer-based upload pipeline with MIME validation and Azure Blob Storage.",
+      "PDFKit/XLSX bulk exports, and Sentry monitoring."
+    ]
+  },
+  {
+    "name": "Data Collection Portal",
+    "description": "Collects student data and preferences for the 2026 internship cycle.",
+    "url": "https://iitg.ac.in/intern-2026",
+    "github": "https://github.com/laladwesh/intern-2026"
+  },
+  {
+    "name": "D-Day Portal",
+    "description": "Live coordination and tracking tool used during placement/interview days.",
+    "url": "https://iitg.ac.in/dday",
+    "github": "https://github.com/laladwesh/live-placement-ccd",
+    "stack": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Socket.io",
+      "Docker",
+      "Tailwind CSS"
+    ],
+    "role": "Student Coordinator, CCD (Sept 2025 – Feb 2026)",
+    "highlights": [
+      "Real-time dashboard with live event broadcasting via Socket.IO.",
+      "Role-based access across 5 roles; jsPDF-based exports.",
+      "Auto-blocks students from further placements once placed.",
+      "Single sign-on handoff from the Placement Portal via short-lived, server-verified JWT tokens.",
+      "Supports 1500+ students and 150+ POCs."
+    ]
+  },
+  {
+    "name": "DPR Portal",
+    "description": "Daily progress report tracking for the placement season.",
+    "url": "https://iitg.ac.in/listing-ccd",
+    "github": "https://github.com/laladwesh/dpr"
+  },
+  {
+    "name": "CCD App Backend",
+    "description": "Codebase behind the CCD's internal placement app.",
+    "url": "https://iitg.ac.in/ccd-app",
+    "github": "https://github.com/tnp-iitg/ccd-app-backend"
+  },
+  {
+    "name": "AIPC Portal",
+    "description": "AIPC portal for the placement process.",
+    "url": "https://iitg.ac.in/aipc",
+    "github": "https://github.com/laladwesh/aipc"
+  }
+]

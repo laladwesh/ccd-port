@@ -1,0 +1,97 @@
+[
+  {
+    "name": "PIMS Evalu Pro (Copy Checker)",
+    "description": "Full-stack digital examination evaluation platform.",
+    "url": "https://prasadacademic.in",
+    "github": "https://github.com/laladwesh/copy-checker",
+    "stack": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Express.js",
+      "Tailwind CSS",
+      "Google Drive",
+      "Docker",
+      "Nginx",
+      "Oracle VM",
+      "GitHub Actions"
+    ],
+    "role": "Freelance project for Prasad Academics",
+    "highlights": [
+      "Converts uploaded PDFs to per-page images, generates processed PDFs, and syncs with Google Drive.",
+      "Processed 8000+ copies with zero downtime via PM2 during peak evaluation cycles.",
+      "Self-hosted on a shared Oracle server behind an Nginx reverse proxy."
+    ]
+  },
+  {
+    "name": "EaseExit",
+    "description": "Backend for the college leave management app — digitizes and automates leave applications and approvals.",
+    "url": "https://easeexit.prasadacademic.in",
+    "github": "https://github.com/laladwesh/college-leave-backend",
+    "stack": [
+      "React / RN",
+      "Node.js",
+      "MongoDB",
+      "Express.js",
+      "Firebase",
+      "Docker",
+      "Nginx",
+      "Oracle VM",
+      "GitHub Actions"
+    ],
+    "role": "Built for Prasad Academics (PIMS)",
+    "highlights": [
+      "Replaced a paper-based leave process with role-based access for students, parents, wardens, guards and admins.",
+      "Multi-level approvals, document uploads, and push notifications via Firebase Cloud Messaging.",
+      "Handled 15,000+ leave applications across web, Android and iOS."
+    ],
+    "playStore": "https://play.google.com/store/apps/details?id=com.pims.pims_app",
+    "appStore": "https://apps.apple.com/app/ease-exit/id6749087386"
+  },
+  {
+    "name": "Elective Registration",
+    "description": "Elective course registration portal for students.",
+    "url": "https://elective.prasadacademic.in",
+    "github": "https://github.com/laladwesh/elective-portal",
+    "stack": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Express.js",
+      "Tailwind CSS",
+      "Nginx",
+      "Oracle VM",
+      "Docker",
+      "GitHub Actions"
+    ],
+    "role": "Built for Prasad Academics (PIMS)",
+    "highlights": [
+      "Google OAuth + JWT auth, with Student and Admin dashboards.",
+      "Bulk student upload via CSV/Excel, and PDF/Excel report generation.",
+      "FCFS allocation using MongoDB atomic transactions allotted 500+ seats across 50+ courses without overbooking."
+    ]
+  },
+  {
+    "name": "Status Dashboard",
+    "description": "Public service status page and protected infrastructure monitoring dashboard.",
+    "url": "https://status.prasadacademic.in",
+    "github": "https://github.com/laladwesh/status",
+    "stack": [
+      "React",
+      "Node.js",
+      "MongoDB",
+      "Express.js",
+      "Tailwind CSS",
+      "WebSockets",
+      "Google Drive",
+      "Nginx",
+      "Oracle VM"
+    ],
+    "role": "Built for Prasad Academics (PIMS)",
+    "highlights": [
+      "Public dashboard with WebSocket-driven real-time server health, uptime/downtime tracking and resource utilization.",
+      "Centralized log aggregation via polling, and a JWT-secured admin panel.",
+      "Automated MongoDB backups to Google Drive."
+    ]
+  }
+]

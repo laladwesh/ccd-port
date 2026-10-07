@@ -1,9 +1,20 @@
 {
   "name": "ccd-port",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "type": "module",
   "scripts": {
-    "serve:ccd": "python -m http.server 4173 --directory ccd",
-    "serve:prasad": "python -m http.server 4174 --directory prasad"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^12.23.22",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "vite": "^7.3.1"
   }
 }
